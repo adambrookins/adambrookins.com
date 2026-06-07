@@ -4,1241 +4,613 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Brookins Kids — Summer 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    /* ── Auth gate ── */
-    #auth-gate {
-      position: fixed; inset: 0; z-index: 9999;
-      background: #1e3a5f;
-      display: flex; align-items: center; justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
-    #auth-gate.hidden { display: none; }
-
-    .gate-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 40px 36px 36px;
-      width: min(380px, calc(100vw - 32px));
-      text-align: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    }
-    .gate-icon { font-size: 2.4rem; display: block; margin-bottom: 14px; }
-    .gate-title { font-size: 1.4rem; font-weight: 700; color: #1f2937; margin-bottom: 4px; }
-    .gate-sub { font-size: 0.88rem; color: #6b7280; margin-bottom: 28px; }
-
-    .gate-input {
-      width: 100%; padding: 13px 16px;
-      font-size: 1rem; font-weight: 600; letter-spacing: 0.1em; text-align: center;
-      border: 2px solid #d1d5db; border-radius: 10px;
-      outline: none; color: #1f2937;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .gate-input:focus { border-color: #3b7dd8; box-shadow: 0 0 0 3px rgba(59,125,216,0.15); }
-    .gate-input.shake {
-      border-color: #ef4444;
-      animation: gateShake 0.4s ease;
-    }
-    @keyframes gateShake {
-      0%,100% { transform: translateX(0); }
-      20%     { transform: translateX(-8px); }
-      40%     { transform: translateX(8px); }
-      60%     { transform: translateX(-5px); }
-      80%     { transform: translateX(5px); }
-    }
-    .gate-btn {
-      margin-top: 14px; width: 100%; padding: 13px;
-      background: #1e3a5f; color: #fff; border: none; border-radius: 10px;
-      font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em;
-      cursor: pointer; transition: background 0.2s;
-    }
-    .gate-btn:hover { background: #0d2a50; }
-    .gate-err { font-size: 0.78rem; color: #ef4444; font-weight: 600; margin-top: 10px; min-height: 18px; }
-
-    /* Hide page content until authed */
-    body.locked .site-header,
-    body.locked .container,
-    body.locked footer { visibility: hidden; }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --rae: #3b7dd8;
-      --rae-light: #e8f1fc;
-      --rae-border: #b3d0f5;
-      --ivy: #2faa6a;
-      --ivy-light: #e6f7ef;
-      --ivy-border: #a8e0c3;
-      --warn: #f59e0b;
-      --warn-light: #fffbeb;
-      --warn-border: #fde68a;
-      --red: #ef4444;
-      --red-light: #fef2f2;
-      --text: #1f2937;
+      --rae: #2f6fd0;
+      --rae-light: #eaf2fc;
+      --rae-border: #bcd6f5;
+      --ivy: #1f9d63;
+      --ivy-light: #e7f6ee;
+      --ivy-border: #aee0c6;
+      --golf: #b5832b;
+      --golf-light: #fbf3e2;
+      --golf-border: #ecd6a8;
+      --water: #1192b3;
+      --water-light: #e2f4f8;
+      --water-border: #b6e1ea;
+      --warn: #d97706;
+      --warn-light: #fff7ec;
+      --warn-border: #f6dca8;
+      --red: #d6453b;
+      --red-light: #fdeceb;
+      --text: #20242b;
       --muted: #6b7280;
-      --border: #e5e7eb;
-      --bg: #f9fafb;
-      --white: #ffffff;
+      --soft: #8a909a;
+      --border: #f0e3cd;
+      --bg: #fff8ee;
+      --card: #ffffff;
+      --coral: #ff6b5e;
+      --sun: #f5a623;
+      --shadow: 0 2px 4px rgba(214,140,40,.06), 0 12px 30px rgba(214,140,40,.12);
     }
 
+    html { font-size: 17px; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--bg);
+      font-family: 'Nunito', ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 92% 4%, #ffe39b 0 78px, rgba(255,227,155,0) 80px),
+        radial-gradient(1100px 420px at 108% -6%, #ffeccb 0%, rgba(255,236,203,0) 58%),
+        radial-gradient(820px 420px at -8% 0%, #e8f1fb 0%, rgba(232,241,251,0) 55%),
+        var(--bg);
+      background-attachment: fixed;
       color: var(--text);
-      font-size: 16px;
-      line-height: 1.6;
+      line-height: 1.55;
+      min-height: 100vh;
+      font-weight: 600;
+      -webkit-text-size-adjust: 100%;
     }
+    h1, h2, h3, h4, .today-act, .day-act, .week-h .wk, .ivy-strip .big, .ccard h3 {
+      font-family: 'Baloo 2', ui-rounded, sans-serif; letter-spacing: 0;
+    }
+
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 18px 72px; }
 
     /* ── Header ── */
-    .site-header {
-      background: var(--white);
-      border-bottom: 2px solid var(--border);
-      padding: 20px 24px;
+    header.site {
       text-align: center;
-    }
-    .site-header h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.02em;
-    }
-    .site-header p {
-      color: var(--muted);
-      margin-top: 4px;
-      font-size: 1rem;
-    }
-
-    /* ── Layout ── */
-    .container {
-      max-width: 900px;
+      padding: 34px 18px 10px;
+      max-width: 980px;
       margin: 0 auto;
-      padding: 28px 20px 60px;
     }
+    header.site { position: relative; }
+    header.site .kicker {
+      display: inline-block; font-size: .72rem; font-weight: 800; letter-spacing: .1em;
+      text-transform: uppercase; color: #e08a1e; background: #fff3d9; border: 2px solid #ffdf9e;
+      padding: 5px 13px; border-radius: 999px;
+    }
+    header.site h1 {
+      font-size: 2.5rem; font-weight: 800; letter-spacing: 0; margin-top: 8px; color: #2c4a63;
+    }
+    header.site h1 span { color: var(--coral); }
+    header.site .sun-deco { position: absolute; top: 16px; right: max(18px, calc(50% - 466px)); width: 52px; height: 52px; }
+    @media (max-width: 760px){ header.site .sun-deco { right: 14px; top: 12px; width: 42px; height: 42px; } }
+    header.site p.sub { color: var(--muted); margin-top: 4px; font-size: 1.02rem; }
 
-    /* ── Section headers ── */
-    .section-title {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 12px;
-      margin-top: 36px;
+    /* ── Today hero ── */
+    .today {
+      background: var(--card);
+      border: 2px solid #ffe2bd;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-top: 18px;
     }
-    .section-title:first-child { margin-top: 0; }
+    .today-top {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+      padding: 14px 22px;
+      background: linear-gradient(180deg,#fff7e6,#fffdf8);
+      border-bottom: 2px solid #ffe9c8;
+      flex-wrap: wrap;
+    }
+    .today-top .tlabel { font-size: .72rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: var(--coral); }
+    .today-top .tdate { font-size: 1.05rem; font-weight: 700; }
+    .today-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    @media (max-width: 680px){ .today-grid { grid-template-columns: 1fr; } }
+    .today-kid { padding: 18px 22px 22px; }
+    .today-kid + .today-kid { border-left: 1px solid var(--border); }
+    @media (max-width: 680px){ .today-kid + .today-kid { border-left: none; border-top: 1px solid var(--border); } }
 
-    /* ── Alert banner ── */
-    .alert {
-      background: var(--warn-light);
-      border: 1px solid var(--warn-border);
-      border-left: 4px solid var(--warn);
-      border-radius: 8px;
-      padding: 14px 18px;
-      margin-bottom: 24px;
-      font-size: 0.95rem;
+    .kidtag { display: inline-flex; align-items: center; gap: 7px; font-weight: 800; font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; }
+    .dot.rae { background: var(--rae); } .dot.ivy { background: var(--ivy); }
+
+    .today-act { font-size: 1.28rem; font-weight: 800; margin: 8px 0 2px; letter-spacing: -.01em; }
+    .today-where { color: var(--muted); font-size: .95rem; }
+    .timeline { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .tchip {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #fff6e6; border: 2px solid #ffe1b0; border-radius: 11px;
+      padding: 7px 11px; font-size: .86rem; font-weight: 700; color: #7a5b2e;
     }
-    .alert strong { color: #92400e; }
+    .tchip svg { width: 16px; height: 16px; }
+    .tchip b { font-weight: 800; }
+
+    /* ── Section ── */
+    .sec-title {
+      display: flex; align-items: center; gap: 10px;
+      font-size: .76rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase;
+      color: #c0892f; margin: 40px 4px 14px;
+    }
+    .sec-title::after { content:""; flex:1; height:2px; background: #ffe1b0; border-radius:2px; }
 
     /* ── Contact cards ── */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 14px;
-      margin-bottom: 8px;
+    .contacts { display: grid; grid-template-columns: repeat(auto-fit,minmax(248px,1fr)); gap: 14px; }
+    .ccard {
+      background: var(--card); border: 2px solid #ffe2bd; border-radius: 18px;
+      box-shadow: var(--shadow); padding: 18px 20px; position: relative;
+      border-top: 5px solid var(--muted);
     }
+    .ccard.rae { border-top-color: var(--rae); }
+    .ccard.ivy { border-top-color: var(--ivy); }
+    .ccard.golf { border-top-color: var(--golf); }
+    .ccard .clabel { font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .ccard.rae .clabel { color: var(--rae); } .ccard.ivy .clabel { color: var(--ivy); } .ccard.golf .clabel { color: var(--golf); }
+    .ccard h3 { font-size: 1.12rem; font-weight: 800; margin: 5px 0 8px; }
+    .ccard p { font-size: .92rem; color: var(--muted); margin-bottom: 5px; }
+    .ccard a { color: var(--rae); text-decoration: none; font-weight: 600; }
+    .ccard a:hover { text-decoration: underline; }
+    .ccard .row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 5px; }
+    .ccard .row svg { width: 17px; height: 17px; flex: none; margin-top: 2px; color: var(--soft); }
+    .ccard .hours { display:inline-block; margin-top: 8px; background: #eef7ff; border: 2px solid #cfe7fb; border-radius: 10px; padding: 6px 11px; font-size: .85rem; font-weight: 800; color: var(--rae); }
+    .tbd { position:absolute; top: 14px; right: 14px; font-size: .62rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--warn); background: var(--warn-light); border:1px solid var(--warn-border); padding: 3px 8px; border-radius: 999px; }
 
-    .card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 18px 20px;
+    /* ── Grade toggle ── */
+    .gradebar {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      background: var(--card); border: 2px solid #ffe2bd; border-radius: 16px;
+      padding: 12px 16px; box-shadow: var(--shadow); margin-bottom: 6px;
     }
-    .card.rae { border-top: 4px solid var(--rae); }
-    .card.ivy { border-top: 4px solid var(--ivy); }
-    .card.general { border-top: 4px solid var(--muted); }
+    .gradebar .lbl { font-size: .9rem; font-weight: 700; }
+    .gradebar .lbl span { color: var(--muted); font-weight: 500; }
+    .seg { display: inline-flex; background: #fff3df; border: 2px solid #ffe1b0; border-radius: 12px; padding: 3px; gap: 3px; }
+    .seg button {
+      border: none; background: none; cursor: pointer; font: inherit; font-weight: 700;
+      padding: 7px 14px; border-radius: 8px; color: var(--muted); font-size: .86rem;
+    }
+    .seg button.on { background: var(--rae); color: #fff; box-shadow: 0 1px 3px rgba(47,111,208,.4); }
 
-    .card-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 6px;
-    }
-    .card.rae .card-label { color: var(--rae); }
-    .card.ivy .card-label { color: var(--ivy); }
-    .card.general .card-label { color: var(--muted); }
+    /* ── Week + day cards ── */
+    .week { margin-top: 26px; }
+    .week-h { display: flex; align-items: baseline; gap: 10px; margin: 0 4px 12px; }
+    .week-h .wk { font-size: 1.02rem; font-weight: 800; }
+    .week-h .wkrange { font-size: .85rem; color: var(--soft); font-weight: 600; }
 
-    .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
-    .card p { font-size: 0.9rem; color: var(--muted); margin-bottom: 4px; line-height: 1.5; }
-    .card a { color: var(--rae); text-decoration: none; }
-    .card a:hover { text-decoration: underline; }
-    .card .hours-badge {
-      display: inline-block;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 4px 10px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-top: 8px;
-    }
+    .days { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 12px; }
 
-    /* ── Reminders checklist ── */
-    .reminders {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 20px 24px;
+    .day {
+      background: var(--card); border: 2px solid #ffe2bd; border-radius: 18px;
+      box-shadow: var(--shadow); padding: 0; overflow: hidden; display: flex; flex-direction: column;
     }
-    .reminders h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 14px;
-    }
-    .reminder-list {
-      list-style: none;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 8px;
-    }
-    .reminder-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      font-size: 0.92rem;
-    }
-    .reminder-list li::before {
-      content: "✓";
-      color: var(--ivy);
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
+    .day.is-today { outline: 3px solid var(--coral); outline-offset: 1px; }
+    .day.closed { opacity: .72; }
+    .day-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 13px 16px 11px; border-bottom: 2px solid #fff0d9; }
+    .day-date { display: flex; align-items: baseline; gap: 8px; white-space: nowrap; }
+    .day-date .dow { font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
+    .day-date .dnum { font-size: 1.02rem; font-weight: 800; white-space: nowrap; }
+    .badge { font-family: 'Baloo 2', sans-serif; font-size: .7rem; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; white-space: nowrap; color: #fff; transform: rotate(2deg); }
+    .badge.trip { background: #ff8a3d; box-shadow: 0 3px 8px rgba(255,138,61,.32); }
+    .badge.water { background: #2bb6cf; box-shadow: 0 3px 8px rgba(43,182,207,.32); }
+    .badge.choice { background: #8a6cf0; box-shadow: 0 3px 8px rgba(138,108,240,.30); }
+    .badge.fun { background: #2faa6a; box-shadow: 0 3px 8px rgba(47,170,106,.30); }
+    .badge.closed { background: #e3675c; box-shadow: 0 3px 8px rgba(227,103,92,.30); }
 
-    /* ── Schedule table ── */
-    .schedule-wrapper {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
+    .day-body { padding: 13px 16px 16px; display: flex; flex-direction: column; gap: 11px; flex: 1; }
+    .day-act { font-size: 1.12rem; font-weight: 800; letter-spacing: -.01em; line-height: 1.2; }
+    .day-times { display: flex; flex-wrap: wrap; gap: 7px; }
+    .pill2 {
+      display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 700;
+      background: #fff6e6; border: 2px solid #ffe1b0; border-radius: 11px; padding: 5px 10px; color: #7a5b2e;
     }
+    .pill2 svg { width: 15px; height: 15px; color: #c89a4e; }
+    .pill2.bus { background: var(--rae-light); border-color: var(--rae-border); color: var(--rae); }
+    .pill2.bus svg { color: var(--rae); }
+    .pill2.buswater { background: var(--water-light); border-color: var(--water-border); color: var(--water); }
+    .pill2.buswater svg { color: var(--water); }
 
-    .schedule-month {
-      border-bottom: 1px solid var(--border);
-    }
-    .schedule-month:last-child { border-bottom: none; }
+    .pack-h { font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); margin-bottom: -2px; }
+    .pack { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pk { display: inline-flex; align-items: center; gap: 6px; font-size: .83rem; font-weight: 800; padding: 5px 10px; border-radius: 11px; border: 2px solid #cfe7fb; background: #eef7ff; color: var(--rae); }
+    .pk svg { width: 15px; height: 15px; }
+    .pk.base { background: #eef7ff; border-color: #cfe7fb; color: var(--rae); }
+    .pk.shirt { background: #fff0e0; border-color: #ffd0a6; color: #d2691e; }
+    .pk.swim { background: #e2f6fb; border-color: #b9e6f0; color: var(--water); }
+    .day-note { font-size: .82rem; color: var(--warn); background: var(--warn-light); border: 1px solid var(--warn-border); border-radius: 9px; padding: 7px 10px; display: flex; gap: 7px; }
+    .day-note svg { width: 15px; height: 15px; flex: none; margin-top: 1px; }
+    .closed-msg { font-size: .9rem; color: var(--red); font-weight: 600; }
 
-    .month-header {
-      background: var(--bg);
-      padding: 14px 20px;
-      font-size: 1rem;
-      font-weight: 700;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    /* Ivy strip */
+    .ivy-strip { background: var(--ivy-light); border: 2px solid var(--ivy-border); border-radius: 18px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .ivy-strip .big { font-size: 1.05rem; font-weight: 800; color: #14613c; }
+    .ivy-strip p { font-size: .9rem; color: #2c6b4c; }
+    .ivy-strip .hours { margin-left: auto; background: #fff; border: 1px solid var(--ivy-border); border-radius: 10px; padding: 8px 13px; font-weight: 700; font-size: .88rem; color: #14613c; }
 
-    .schedule-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
+    /* Rules */
+    .rules { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 12px; }
+    .rule { background: var(--card); border: 2px solid #ffe2bd; border-radius: 18px; box-shadow: var(--shadow); padding: 15px 17px; display: flex; gap: 12px; }
+    .rule .ic { width: 40px; height: 40px; flex: none; border-radius: 13px; display: grid; place-items: center; background: var(--rae-light); color: var(--rae); }
+    .rule .ic svg { width: 20px; height: 20px; }
+    .rule.amber .ic { background: var(--warn-light); color: var(--warn); }
+    .rule.green .ic { background: var(--ivy-light); color: var(--ivy); }
+    .rule.red .ic { background: var(--red-light); color: var(--red); }
+    .rule h4 { font-size: .96rem; font-weight: 800; margin-bottom: 2px; }
+    .rule p { font-size: .85rem; color: var(--muted); line-height: 1.45; }
 
-    .schedule-table thead th {
-      background: var(--bg);
-      padding: 10px 14px;
-      text-align: left;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--muted);
-      border-bottom: 1px solid var(--border);
-    }
+    footer.site { text-align: center; color: var(--soft); font-size: .82rem; padding: 30px 18px 0; }
+    footer.site a { color: var(--soft); }
 
-    .schedule-table tbody tr {
-      border-bottom: 1px solid var(--border);
-    }
-    .schedule-table tbody tr:last-child { border-bottom: none; }
-    .schedule-table tbody tr:hover { background: #fafafa; }
+    .legend { display:flex; flex-wrap:wrap; gap:14px; margin: 6px 4px 0; font-size:.8rem; color:var(--muted); }
+    .legend span { display:inline-flex; align-items:center; gap:6px; }
+    .legend i { width:12px;height:12px;border-radius:3px;display:inline-block; }
 
-    .schedule-table td {
-      padding: 11px 14px;
-      vertical-align: top;
-    }
-
-    .date-cell {
-      min-width: 110px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .date-cell .day { font-size: 0.78rem; color: var(--muted); font-weight: 400; }
-
-    .pill {
-      display: inline-block;
-      padding: 2px 9px;
-      border-radius: 20px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .pill.rae { background: var(--rae-light); color: var(--rae); border: 1px solid var(--rae-border); }
-    .pill.ivy { background: var(--ivy-light); color: var(--ivy); border: 1px solid var(--ivy-border); }
-    .pill.golf { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-    .pill.closed { background: var(--red-light); color: var(--red); border: 1px solid #fecaca; }
-    .pill.nocare { background: #f3f4f6; color: var(--muted); border: 1px solid var(--border); }
-
-    .cell-main { font-weight: 500; margin-bottom: 2px; }
-    .cell-sub { font-size: 0.82rem; color: var(--muted); }
-    .cell-activity {
-      margin-top: 5px;
-      font-size: 0.8rem;
-      color: #374151;
-      background: rgba(0,0,0,0.04);
-      border-radius: 4px;
-      padding: 3px 8px;
-      display: inline-block;
-    }
-
-    .shirt-tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 1px 7px;
-      border-radius: 10px;
-      vertical-align: middle;
-      margin-left: 4px;
-    }
-    .shirt-green { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-    .shirt-blue  { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
-
-    .row-closed { background: var(--red-light) !important; }
-    .row-golf   { background: #fffbeb !important; }
-    .row-gs-green { background: #f0fdf4 !important; }
-    .row-gs-blue  { background: #eff6ff !important; }
-
-    /* shirt legend */
-    .shirt-legend {
-      display: flex; gap: 16px; flex-wrap: wrap;
-      padding: 10px 14px;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      font-size: 0.78rem;
-      color: var(--muted);
-      align-items: center;
-    }
-    .shirt-legend span { display: flex; align-items: center; gap: 5px; }
-
-    /* note rows */
-    .schedule-note {
-      padding: 9px 14px;
-      background: var(--warn-light);
-      font-size: 0.83rem;
-      color: #92400e;
-      border-top: 1px dashed var(--warn-border);
-      border-bottom: 1px dashed var(--warn-border);
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 600px) {
-      .site-header h1 { font-size: 1.4rem; }
-      .cards { grid-template-columns: 1fr; }
-      .reminder-list { grid-template-columns: 1fr; }
-      .schedule-table thead { display: none; }
-      .schedule-table tbody tr { display: block; padding: 12px 14px; }
-      .schedule-table td { display: block; padding: 2px 0; border: none; }
-      .date-cell { font-size: 0.95rem; }
+    @media print {
+      body { background: #fff; }
+      .gradebar, footer.site { display: none; }
+      .day, .ccard, .today, .rule { box-shadow: none; break-inside: avoid; }
     }
   </style>
 </head>
 <body>
 
-<header class="site-header">
-  <h1>Brookins Kids — Summer 2026</h1>
-  <p>Quick reference for schedules, drop-offs, and pickups</p>
+<header class="site">
+  <svg class="sun-deco" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5" fill="#ffd166" stroke="#f5a623"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4 4l2 2M18 18l2 2M20 4l-2 2M6 18l-2 2"/></svg>
+  <div class="kicker">☀ Good Shepherd Summer Care · 2026</div>
+  <h1>Brookins Kids <span>Summer</span></h1>
+  <p class="sub">A quick day-by-day reference for whoever's on drop-off &amp; pickup duty 💛</p>
 </header>
 
-<div class="container">
+<div class="wrap">
 
-  <!-- ── Alert ── -->
-  <div class="alert">
-    <strong>Note — Golf Camp overlap:</strong> Rae's golf camp runs <strong>June 8–11</strong> (Mon–Thu, 9am–3pm at Brookview). Summer Care at Good Shepherd starts June 10. On June 10 &amp; 11 Rae goes to <strong>golf camp</strong>, not summer care. Summer Care begins in full on <strong>Friday June 12.</strong>
-  </div>
+  <!-- TODAY -->
+  <section class="today" id="today"></section>
 
-  <!-- ── Morning Checklist ── -->
-  <p class="section-title">Before You Leave the House</p>
-  <div class="reminders">
-    <h3>Morning Send-Off Checklist</h3>
-    <ul class="reminder-list">
-      <li>Apply sunscreen (face, arms, neck)</li>
-      <li>Pack a full water bottle</li>
-      <li>Pack a sack lunch — no lunch provided at Good Shepherd or golf camp</li>
-      <li>Sunscreen re-apply spray in backpack for outdoor days</li>
-      <li>Weather-appropriate layers (MN mornings can be cool)</li>
-      <li>Any medication if needed</li>
-      <li>Check backpack for permission slips / field trip notes</li>
-      <li>Field trip day: green GS Summer Care shirt</li>
-      <li>Swim day: blue GS shirt + swimsuit + towel</li>
-      <li>Check Emma's weekly email for what each day needs</li>
-    </ul>
-  </div>
+  <!-- CONTACTS -->
+  <div class="sec-title">Who &amp; Where</div>
+  <div class="contacts">
 
-  <!-- ── Contact Cards ── -->
-  <p class="section-title">Key Contacts &amp; Locations</p>
-  <div class="cards">
-
-    <div class="card ivy">
-      <div class="card-label">Ivy</div>
-      <h3>Pam's House</h3>
-      <p>515 Winnetka Ave S<br>Minneapolis, MN 55426</p>
-      <p><strong>Phone:</strong> <a href="tel:6122367421">612-236-7421</a></p>
-      <span class="hours-badge">Drop 7:50–9:00 am &nbsp;·&nbsp; Pickup 3:00–5:00 pm</span>
-    </div>
-
-    <div class="card rae">
-      <div class="card-label">Rae — Summer Care</div>
+    <div class="ccard rae">
+      <div class="clabel">Rae · Summer Care</div>
       <h3>Good Shepherd School</h3>
-      <p>145 Jersey Ave. S<br>Golden Valley, MN 55426</p>
-      <p><strong>School Care:</strong> Emma Sandvig</p>
-      <p><a href="mailto:schoolcare@gsgvschool.org">schoolcare@gsgvschool.org</a></p>
-      <p><a href="tel:7635454285">763-545-4285 ext. 816</a></p>
-      <p style="margin-top:8px;font-weight:600;color:#1f2937;">Drop-off &amp; pickup: <strong>Door 12</strong></p>
-      <span class="hours-badge">Drop 7:30–9:00 am &nbsp;·&nbsp; Pickup by 5:30 pm</span>
-    </div>
-
-    <div class="card rae">
-      <div class="card-label">Rae — Golf Camp</div>
-      <h3>Brookview Golf Course</h3>
-      <p>316 Brookview Pkwy S<br>Golden Valley, MN 55426</p>
-      <p><strong>Coach:</strong> Taylor House (TGA / Op 36)</p>
-      <p><a href="mailto:taylor.house@playtga.com">taylor.house@playtga.com</a></p>
-      <span class="hours-badge">9:00 am – 3:00 pm</span>
-    </div>
-
-  </div>
-
-  <!-- ── Schedule ── -->
-  <p class="section-title">Day-by-Day Schedule</p>
-
-  <div class="shirt-legend">
-    <strong>Row colors:</strong>
-    <span><span class="shirt-tag shirt-green">Summer Care shirt</span> Field trip day — wear the GS Summer Care shirt</span>
-    <span><span class="shirt-tag shirt-blue">Water shirt + swimsuit</span> Swim / water park day — wear water shirt, bring swimsuit &amp; towel</span>
-    <span style="color:#92400e;background:#fef9c3;padding:2px 8px;border-radius:4px;">⛳ Golf camp</span>
-    <span style="color:#991b1b;background:#fee2e2;padding:2px 8px;border-radius:4px;">Closed</span>
-  </div>
-
-  <div class="schedule-wrapper">
-
-    <!-- ═══ JUNE ═══ -->
-    <div class="schedule-month">
-      <div class="month-header">June 2026</div>
-
-      <div class="schedule-note">
-        ⛳ June 8–11: Rae has <strong>Golf Camp at Brookview</strong> (Mon–Thu, 9am–3pm). Good Shepherd Summer Care begins June 12.
+      <div class="row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <p>145 Jersey Ave S<br>Golden Valley, MN 55426<br><b style="color:var(--text)">Door 12</b> (main entrance) — sign in &amp; out</p>
       </div>
-
-      <table class="schedule-table">
-        <thead>
-          <tr><th>Date</th><th>Rae</th><th>Ivy</th></tr>
-        </thead>
-        <tbody>
-
-          <tr class="row-golf">
-            <td class="date-cell">June 8<div class="day">Monday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill golf">Golf Camp</span></div>
-              <div class="cell-sub">Brookview Golf Course · Drop 9am · Pickup 3pm</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-golf">
-            <td class="date-cell">June 9<div class="day">Tuesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill golf">Golf Camp</span></div>
-              <div class="cell-sub">Brookview Golf Course · Drop 9am · Pickup 3pm</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-golf">
-            <td class="date-cell">June 10<div class="day">Wednesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill golf">Golf Camp</span></div>
-              <div class="cell-sub">Brookview Golf Course · Drop 9am · Pickup 3pm</div>
-              <div class="cell-activity">ℹ️ GS Summer Care opens today — Rae attending golf camp instead</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-golf">
-            <td class="date-cell">June 11<div class="day">Thursday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill golf">Golf Camp</span></div>
-              <div class="cell-sub">Brookview Golf Course · Drop 9am · Pickup 3pm</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-blue">
-            <td class="date-cell">June 12<div class="day">Friday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-blue">Water shirt + swimsuit</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🏊 St. Louis Park Pool · Depart 12:15 · Return ~3:30 · Rae's first day!</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">June 15<div class="day">Monday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚌 Elm Creek · Depart 12:00 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">June 16<div class="day">Tuesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🎭 Sidekick Theatre: Robin Hood · Depart 11:00 · Return ~2:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">June 17<div class="day">Wednesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🎮 Capture the Flag</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">June 18<div class="day">Thursday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🦁 Minnesota Zoo · Depart 10:20 · Return ~3:45</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-blue">
-            <td class="date-cell">June 19<div class="day">Friday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-blue">Water shirt + swimsuit</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🏊 Crystal Cove · Depart 12:00 · Return ~4:00</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">June 22<div class="day">Monday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚌 Central Park, Maple Grove · Depart 12:00 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">June 23<div class="day">Tuesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">⭐ Choice Day</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">June 24<div class="day">Wednesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🏃 Obstacle Course</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">June 25<div class="day">Thursday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚌 Lava Island · Depart 12:30 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-blue">
-            <td class="date-cell">June 26<div class="day">Friday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-blue">Water shirt + swimsuit</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🏊 Water Day at Scheid Park · Depart 12:15 · Return ~3:00</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">June 29<div class="day">Monday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚌 Hyland Park · Depart 12:10 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">June 30<div class="day">Tuesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🏆 Minute To Win It!</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-        </tbody>
-      </table>
+      <div class="row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 9 6 15 15 15a2 2 0 0 0 2-1.7l-.4-2.8a1.6 1.6 0 0 0-2-1.3l-2.5.6a12 12 0 0 1-5-5l.6-2.5a1.6 1.6 0 0 0-1.3-2L7.7 4A2 2 0 0 0 5 6"/></svg>
+        <p>School Care office<br><a href="tel:+17635454285,855">763-545-4285 ✕855</a></p>
+      </div>
+      <div class="row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg>
+        <p>Emma Sandvig — Director<br><a href="/cdn-cgi/l/email-protection#187d7575796b79767c6e717f587f6b7f6e6b7b7077777436776a7f"><span class="__cf_email__" data-cfemail="d9bcb4b4b8aab8b7bdafb0be99beaabeafaabab1b6b6b5f7b6abbe">[email&#160;protected]</span></a><br><a href="tel:+17635454285,816">763-545-4285 ✕816</a></p>
+      </div>
+      <span class="hours">Doors 7:30 · drop by 9:30a · pickup by 5:30p</span>
     </div>
 
-    <!-- ═══ JULY ═══ -->
-    <div class="schedule-month">
-      <div class="month-header">July 2026</div>
-      <table class="schedule-table">
-        <thead>
-          <tr><th>Date</th><th>Rae</th><th>Ivy</th></tr>
-        </thead>
-        <tbody>
-
-          <tr>
-            <td class="date-cell">July 1<div class="day">Wednesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚶 Walk to Lions Park · Depart 1:00 · Return ~3:00</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-blue">
-            <td class="date-cell">July 2<div class="day">Thursday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-blue">Water shirt + swimsuit</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🏊 Edina Aquatic Center · Depart 12:30 · Return ~3:45</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-closed">
-            <td class="date-cell">July 3<div class="day">Friday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill closed">Closed</span></div>
-              <div class="cell-sub">Good Shepherd closed — July 4th holiday</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-closed">
-            <td class="date-cell">July 4–6<div class="day">Sat–Mon</div></td>
-            <td colspan="2">
-              <div class="cell-main"><span class="pill closed">No School Care</span></div>
-              <div class="cell-sub">July 4th weekend &amp; July 6 holiday — Good Shepherd closed. Pam available Mon–Fri.</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">July 7<div class="day">Tuesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚌 Museum of Illusions · Depart 12:15 · Return ~3:00</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">July 8<div class="day">Wednesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🎨 Tie Dye Day!</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">July 9<div class="day">Thursday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🔬 Science Crew</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-blue">
-            <td class="date-cell">July 10<div class="day">Friday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-blue">Water shirt + swimsuit</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🏊 Cascade Bay · Depart 11:30 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">July 13<div class="day">Monday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚶 Walk to Lions Park · Depart 1:00 · Return ~3:00</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">July 14<div class="day">Tuesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🌿 Nature Walk at GS</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">July 15<div class="day">Wednesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🏀 Minnesota Lynx Game · Depart 10:45 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">July 16<div class="day">Thursday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚌 Pump It Up · Depart 12:30 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-blue">
-            <td class="date-cell">July 17<div class="day">Friday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-blue">Water shirt + swimsuit</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🏊 Water Day at GS</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">July 20<div class="day">Monday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚌 Gale Farm (3rd–6th grade) · Depart 12:00 · Return ~3:00</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">July 21<div class="day">Tuesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚌 Silverwood (1st–2nd grade) · Depart 12:30 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">July 22<div class="day">Wednesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🏅 Summer Care Olympics</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">July 23<div class="day">Thursday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill nocare">Not Enrolled</span></div>
-              <div class="cell-sub">Rae not signed up for this day — confirm with parents</div>
-              <div class="cell-activity" style="color:#6b7280;">GS activity: Summer Care Olympics</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">July 24<div class="day">Friday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill nocare">Not Enrolled</span></div>
-              <div class="cell-sub">Rae not signed up for this day — confirm with parents</div>
-              <div class="cell-activity" style="color:#6b7280;">GS activity: Bunker Beach (water day)</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">July 27<div class="day">Monday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚌 Baker Park · Depart 12:00 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">July 28<div class="day">Tuesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🍕 Pizza &amp; Movie Day</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">July 29<div class="day">Wednesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🎭 Stages Theatre: Shrek Jr. · Depart 11:45 · Return ~2:15</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">July 30<div class="day">Thursday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">⚾ Minnesota Twins Game (3rd–6th grade) · Depart 11:30 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-blue">
-            <td class="date-cell">July 31<div class="day">Friday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-blue">Water shirt + swimsuit</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🏊 Elm Creek Swim Pond · Depart 12:00 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-        </tbody>
-      </table>
+    <div class="ccard ivy">
+      <div class="clabel">Ivy · Daytime</div>
+      <h3>Pam's House</h3>
+      <div class="row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <p>515 Winnetka Ave S<br>Minneapolis, MN 55426</p>
+      </div>
+      <div class="row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 9 6 15 15 15a2 2 0 0 0 2-1.7l-.4-2.8a1.6 1.6 0 0 0-2-1.3l-2.5.6a12 12 0 0 1-5-5l.6-2.5a1.6 1.6 0 0 0-1.3-2L7.7 4A2 2 0 0 0 5 6"/></svg>
+        <p>Pam — <a href="tel:+16122367421">612-236-7421</a></p>
+      </div>
+      <span class="hours" style="color:var(--ivy)">Drop 7:50–9:00a · pickup 3:00–5:00p</span>
     </div>
 
-    <!-- ═══ AUGUST ═══ -->
-    <div class="schedule-month">
-      <div class="month-header">August 2026</div>
-      <table class="schedule-table">
-        <thead>
-          <tr><th>Date</th><th>Rae</th><th>Ivy</th></tr>
-        </thead>
-        <tbody>
-
-          <tr>
-            <td class="date-cell">Aug 3<div class="day">Monday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚶 Walk to Lions Park · Depart 1:00 · Return ~3:00</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">Aug 4<div class="day">Tuesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🔬 Fun Lab · Depart 12:00 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">Aug 5<div class="day">Wednesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">⭐ Choice Day</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">Aug 6<div class="day">Thursday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🗺️ Treasure Hunt</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-blue">
-            <td class="date-cell">Aug 7<div class="day">Friday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-blue">Water shirt + swimsuit</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🏊 St. Louis Park Pool · Depart 12:15 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">Aug 10<div class="day">Monday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚌 Gale Farm (1st–2nd grade) · Depart 12:00 · Return ~3:00</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">Aug 11<div class="day">Tuesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚌 Silverwood (3rd–6th grade) · Depart 12:30 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-green">
-            <td class="date-cell">Aug 12<div class="day">Wednesday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Summer Care shirt</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🚌 Hyland Park · Depart 12:10 · Return ~3:30</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr class="row-gs-blue">
-            <td class="date-cell">Aug 13<div class="day">Thursday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-blue">Water shirt + swimsuit</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🏊 Edina Aquatic Center · Depart 12:30 · Return ~3:45</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">Aug 14<div class="day">Friday</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="pill closed" style="font-size:0.7rem;padding:1px 7px;">Last Day</span></div>
-              <div class="cell-sub">Door 12 · Drop 7:30–9:30am · Pickup by 5:30pm</div>
-              <div class="cell-activity">🎤 Summer Care Talent Show! — Last day</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-        </tbody>
-      </table>
-    </div>
-
-  </div><!-- end schedule-wrapper -->
-
-  <!-- ── Good to Know ── -->
-  <p class="section-title">Good to Know</p>
-  <div class="cards">
-
-    <div class="card general">
-      <div class="card-label">Lunches</div>
-      <h3>Pack a Lunch Daily</h3>
-      <p>Neither Good Shepherd Summer Care nor the golf camp provide lunch. Pack a sack lunch for both Rae and Ivy every day.</p>
-    </div>
-
-    <div class="card general">
-      <div class="card-label">Sunscreen</div>
-      <h3>Apply Before Drop-Off</h3>
-      <p>Good Shepherd takes kids on outdoor field trips regularly (Minnesota Zoo, outdoor activities). Apply sunscreen at home before the car ride. Pack a spray bottle in Rae's bag for reapplication.</p>
-    </div>
-
-    <div class="card general">
-      <div class="card-label">Shirts — Field Trip Days</div>
-      <h3>GS Summer Care Shirt</h3>
-      <p>On field trip days Rae wears her Good Shepherd Summer Care shirt. Rows highlighted green on the schedule above are shirt days.</p>
-      <p style="margin-top:8px;font-size:0.82rem;color:#6b7280;">Note: GS is ordering brand-new shirts for 2026 (new color — not the old green). An order form will be sent once the design is decided. Shirts are distributed the first week of summer care.</p>
-    </div>
-
-    <div class="card general">
-      <div class="card-label">Shirts — Swim Days</div>
-      <h3>GS Water Shirt + Swim Gear</h3>
-      <p>On water park / swim days Rae needs her Good Shepherd <strong>water shirt</strong>, a swimsuit, and a towel. Rows highlighted blue on the schedule are swim days.</p>
-      <p style="margin-top:8px;font-size:0.82rem;color:#6b7280;">She doesn't need to arrive in her swimsuit — they change before leaving. The schedule above already shows which days are swim days.</p>
-    </div>
-
-    <div class="card general">
-      <div class="card-label">Weekly Schedule</div>
-      <h3>Emma Emails Every Week</h3>
-      <p>Every week Emma Sandvig sends a day-by-day activity email from <a href="mailto:schoolcare@gsgvschool.org">schoolcare@gsgvschool.org</a>. It lists field trips, shirt needed, and anything special to pack.</p>
-      <p style="margin-top:8px;font-size:0.82rem;color:#6b7280;">Check that email Sunday evening or Monday morning so you know what Rae needs each day.</p>
-    </div>
-
-    <div class="card general">
-      <div class="card-label">Field Trips</div>
-      <h3>Known 2026 Trips</h3>
-      <p>Minnesota Zoo · Pump It Up · Minnesota Lynx game · Minnesota Twins game · Water park trips</p>
-      <p style="margin-top:8px;font-size:0.82rem;color:#6b7280;">Field trip cost is included — no extra money needed. Specific dates come in Emma's weekly email.</p>
-    </div>
-
-    <div class="card general">
-      <div class="card-label">Golf Camp App</div>
-      <h3>Operation 36 App</h3>
-      <p>Taylor House (Rae's golf coach) may send schedule updates through the Op 36 app. Check with Adam/Jenny if you need access.</p>
-      <p style="margin-top:6px"><a href="mailto:taylor.house@playtga.com">taylor.house@playtga.com</a></p>
-    </div>
-
-    <div class="card general">
-      <div class="card-label">Pickup</div>
-      <h3>ID May Be Required</h3>
-      <p>If picking up from Good Shepherd for the first time, bring a photo ID. You should be on the approved pickup list — call Emma Sandvig at 763-545-4285 ext. 816 if there's any issue.</p>
-    </div>
-
-    <div class="card general">
-      <div class="card-label">July 23–24</div>
-      <h3>Rae Not Enrolled</h3>
-      <p>Rae is not signed up for Good Shepherd on Thu July 23 or Fri July 24. Confirm with Adam &amp; Jenny what the plan is for those days.</p>
+    <div class="ccard golf">
+      <span class="tbd">Confirm</span>
+      <div class="clabel">Rae · Golf Lessons</div>
+      <h3>Golf — details TBD</h3>
+      <p>Send me the course/location, day(s) &amp; time, and instructor contact and I'll slot golf days into the schedule (and adjust those days' drop-off / pickup automatically).</p>
+      <div class="row" style="margin-top:6px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v15"/><path d="M12 5l6 2-6 2"/><circle cx="12" cy="20" r="1.6"/></svg>
+        <p>What does Rae bring? (clubs, water, hat)</p>
+      </div>
     </div>
 
   </div>
 
-</div><!-- end container -->
+  <!-- SCHEDULE -->
+  <div class="sec-title">Rae · Day-by-Day Summer Care</div>
 
-<footer style="text-align:center; padding: 20px; color: #9ca3af; font-size: 0.8rem; border-top: 1px solid #e5e7eb;">
-  Last updated June 2026 · adambrookins.com/kids.html
-</footer>
-
-<!-- ── Auth gate overlay ── -->
-<div id="auth-gate">
-  <div class="gate-card">
-    <span class="gate-icon">👨‍👩‍👧‍👦</span>
-    <div class="gate-title">Brookins Kids</div>
-    <p class="gate-sub">Summer 2026 Schedule<br>Enter the password to continue.</p>
-    <form id="gate-form" autocomplete="off">
-      <input id="gate-pw" type="password" class="gate-input" placeholder="Password" autofocus autocomplete="new-password" />
-      <button type="submit" class="gate-btn">View Schedule</button>
-      <div class="gate-err" id="gate-err"></div>
-    </form>
+  <div class="gradebar">
+    <div class="lbl">Rae's grade this fall: <span>(sets the grade-specific field-trip days)</span></div>
+    <div class="seg" id="gradeseg">
+      <button data-g="1-2">1st–2nd</button>
+      <button data-g="3-6">3rd–6th</button>
+    </div>
   </div>
+  <div class="legend">
+    <span><i style="background:var(--rae)"></i> Field trip — wear Summer Care shirt</span>
+    <span><i style="background:var(--water)"></i> Water day — water shirt + suit + towel</span>
+    <span><i style="background:var(--ivy)"></i> Fun day at GS</span>
+    <span><i style="background:var(--red)"></i> Closed</span>
+  </div>
+
+  <div id="schedule"></div>
+
+  <!-- IVY constant -->
+  <div class="sec-title">Ivy · Every Weekday</div>
+  <div class="ivy-strip">
+    <div>
+      <div class="big">Ivy goes to Pam's, Monday–Friday</div>
+      <p>515 Winnetka Ave S · Pam: 612-236-7421 · Same routine every day — pack a lunch &amp; snacks, sunscreen on before drop-off.</p>
+    </div>
+    <span class="hours">Drop 7:50–9:00a · Pickup 3:00–5:00p</span>
+  </div>
+
+  <!-- RULES -->
+  <div class="sec-title">Good to Know — Every Day</div>
+  <div class="rules">
+    <div class="rule">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 10h10l-1 9a2 2 0 0 1-2 1.8H10A2 2 0 0 1 8 19z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg></div>
+      <div><h4>Pack a lunch — nut-free</h4><p>No lunch is provided. Lunches must be <b>peanut &amp; tree-nut free</b>. No microwave, so nothing that needs heating. Pack silverware if needed.</p></div>
+    </div>
+    <div class="rule amber">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+      <div><h4>Sunscreen before drop-off</h4><p>Apply <b>every day before</b> you bring Rae. School uses Up &amp; Up SPF 50 to reapply — send your own if she's sensitive to it.</p></div>
+    </div>
+    <div class="rule green">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 20c2-3 4-4 6-4s4 1 6 4"/><path d="M9 9l3-4 3 4"/><path d="M7 13l5-6 5 6"/></svg></div>
+      <div><h4>Tennis shoes — no flip-flops</h4><p>Lots of gym &amp; outdoor time. <b>Flip-flops aren't allowed.</b> Send closed-toe shoes; a labeled water bottle &amp; a book are good every day.</p></div>
+    </div>
+    <div class="rule red">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+      <div><h4>Pickup by 5:30 — late fee</h4><p>After 5:30 it's <b>$30 per 15 minutes</b>. Drop off no later than <b>9:30am</b> (earlier on field-trip days so Rae doesn't miss the bus).</p></div>
+    </div>
+  </div>
+
 </div>
 
-<script>
-  (function () {
-    var PASSWORD = 'brookins';
-    var SESSION_KEY = 'kids_auth';
-    var gate = document.getElementById('auth-gate');
-    var form = document.getElementById('gate-form');
-    var input = document.getElementById('gate-pw');
-    var errMsg = document.getElementById('gate-err');
+<footer class="site">
+  Built from the 2026 Good Shepherd Summer Care packet · Summer care runs Wed June 10 – Fri Aug 14 · <a href="https://adambrookins.com">adambrookins.com</a>
+</footer>
 
-    function unlock() {
-      sessionStorage.setItem(SESSION_KEY, '1');
-      gate.classList.add('hidden');
-      document.body.classList.remove('locked');
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ───────── Icons ───────── */
+const I = {
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  bus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="5" width="16" height="11" rx="2"/><path d="M4 11h16"/><circle cx="8" cy="18" r="1.5"/><circle cx="16" cy="18" r="1.5"/></svg>',
+  lunch:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 10h10l-1 9a2 2 0 0 1-2 1.8H10A2 2 0 0 1 8 19z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg>',
+  water:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3s6 6.5 6 10.5a6 6 0 0 1-12 0C6 9.5 12 3 12 3z"/></svg>',
+  snack:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 8c-2-3-7-1.5-7 4 0 4.5 4 8 7 8s7-3.5 7-8c0-5.5-5-7-7-4z"/><path d="M12 8c0-2 1-3.2 3-3.4"/></svg>',
+  sun:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>',
+  book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5a2 2 0 0 1 2-2h11v16H7a2 2 0 0 0-2 2z"/><path d="M5 19V5"/></svg>',
+  shoe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16v-4l4-2 2 2 5 1c3 .5 6 1 7 3v0H3z"/></svg>',
+  shirt:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 6l2 3 2-1.2V21h8V7.8L18 9l2-3-4-3-2 2H10z"/></svg>',
+  suit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l-1 7-3 1-3-1z"/><path d="M9 11l-1 6M15 11l1 6"/></svg>',
+  towel:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="1.5"/><path d="M9 3v18"/></svg>',
+  warn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h0"/></svg>'
+};
+
+/* ───────── Data: full summer-care calendar from the packet ─────────
+   type: trip | water | fun | choice | closed
+   For grade-specific days, `grades` holds {"1-2":{...}, "3-6":{...}} overrides. */
+const DAYS = [
+  { d:'2026-06-10', act:'Welcome to Summer Care!', type:'fun', note:'First day — regular day at GS.' },
+  { d:'2026-06-11', act:'Fun Lab', type:'trip', dep:'12:00', back:'3:30' },
+  { d:'2026-06-12', act:'St. Louis Park Pool', type:'water', dep:'12:15', back:'3:30' },
+
+  { d:'2026-06-15', act:'Elm Creek', type:'trip', dep:'12:00', back:'3:30' },
+  { d:'2026-06-16', act:'Sidekick Theatre: Robin Hood', type:'trip', dep:'11:00', back:'2:30' },
+  { d:'2026-06-17', act:'Capture the Flag', type:'fun' },
+  { d:'2026-06-18', act:'Minnesota Zoo', type:'trip', dep:'10:20', back:'3:45' },
+  { d:'2026-06-19', act:'Crystal Cove', type:'water', dep:'12:00', back:'4:00' },
+
+  { d:'2026-06-22', act:'Central Park, Maple Grove', type:'trip', dep:'12:00', back:'3:30' },
+  { d:'2026-06-23', act:'Choice Day!', type:'choice' },
+  { d:'2026-06-24', act:'Obstacle Course', type:'fun' },
+  { d:'2026-06-25', act:'Lava Island', type:'trip', dep:'12:30', back:'3:30' },
+  { d:'2026-06-26', act:'GV Water Day · Scheid Park', type:'water', dep:'12:15', back:'3:00' },
+
+  { d:'2026-06-29', act:'Hyland Park', type:'trip', dep:'12:10', back:'3:30' },
+  { d:'2026-06-30', act:'Minute To Win It!', type:'fun' },
+  { d:'2026-07-01', act:'Walk to Lions Park', type:'fun', walk:true, dep:'1:00', back:'3:00' },
+  { d:'2026-07-02', act:'Edina Aquatic Center', type:'water', dep:'12:30', back:'3:45' },
+  { d:'2026-07-03', act:'Closed — Fourth of July', type:'closed' },
+
+  { d:'2026-07-06', act:'Closed', type:'closed' },
+  { d:'2026-07-07', act:'Museum of Illusions', type:'trip', dep:'12:15', back:'3:00' },
+  { d:'2026-07-08', act:'Tie Dye Day!', type:'fun' },
+  { d:'2026-07-09', act:'Science Crew', type:'fun' },
+  { d:'2026-07-10', act:'Cascade Bay', type:'water', dep:'11:30', back:'3:30' },
+
+  { d:'2026-07-13', act:'Walk to Lions Park', type:'fun', walk:true, dep:'1:00', back:'3:00' },
+  { d:'2026-07-14', act:'Nature Walk at GS', type:'fun' },
+  { d:'2026-07-15', act:'Minnesota Lynx Game', type:'trip', dep:'10:45', back:'3:30' },
+  { d:'2026-07-16', act:'Pump It Up', type:'trip', dep:'12:30', back:'3:30' },
+  { d:'2026-07-17', act:'Water Day at GS', type:'water', onsite:true },
+
+  { d:'2026-07-20', act:'Summer Care at GS', type:'fun', grades:{ '3-6':{ act:'Gale Farm', type:'trip', dep:'12:00', back:'3:00' } } },
+  { d:'2026-07-21', act:'Summer Care at GS', type:'fun', grades:{ '1-2':{ act:'Silverwood', type:'trip', dep:'12:30', back:'3:30' } } },
+  { d:'2026-07-22', act:'Summer Care Olympics', type:'fun' },
+  { d:'2026-07-23', act:'Summer Care Olympics', type:'fun' },
+  { d:'2026-07-24', act:'Bunker Beach', type:'water', dep:'12:00', back:'4:00' },
+
+  { d:'2026-07-27', act:'Baker Park', type:'trip', dep:'12:00', back:'3:30' },
+  { d:'2026-07-28', act:'Pizza & Movie Day', type:'fun' },
+  { d:'2026-07-29', act:'Stages Theatre: Shrek Jr.', type:'trip', dep:'11:45', back:'2:15' },
+  { d:'2026-07-30', act:'Summer Care at GS', type:'fun', grades:{ '3-6':{ act:'Minnesota Twins Game', type:'trip', dep:'11:30', back:'3:30' } } },
+  { d:'2026-07-31', act:'Elm Creek Swim Pond', type:'water', dep:'12:00', back:'3:30' },
+
+  { d:'2026-08-03', act:'Walk to Lions Park', type:'fun', walk:true, dep:'1:00', back:'3:00' },
+  { d:'2026-08-04', act:'Fun Lab', type:'trip', dep:'12:00', back:'3:30' },
+  { d:'2026-08-05', act:'Choice Day', type:'choice' },
+  { d:'2026-08-06', act:'Treasure Hunt', type:'fun' },
+  { d:'2026-08-07', act:'St. Louis Park Pool', type:'water', dep:'12:15', back:'3:30' },
+
+  { d:'2026-08-10', act:'Summer Care at GS', type:'fun', grades:{ '1-2':{ act:'Gale Farm', type:'trip', dep:'12:00', back:'3:00' } } },
+  { d:'2026-08-11', act:'Summer Care at GS', type:'fun', grades:{ '3-6':{ act:'Silverwood', type:'trip', dep:'12:30', back:'3:30' } } },
+  { d:'2026-08-12', act:'Hyland Park', type:'trip', dep:'12:10', back:'3:30' },
+  { d:'2026-08-13', act:'Edina Aquatic Center', type:'water', dep:'12:30', back:'3:45' },
+  { d:'2026-08-14', act:'Summer Care Talent Show!', type:'fun', note:'Last day of summer care 🎉' },
+];
+
+const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function parse(s){ const [y,m,d]=s.split('-').map(Number); return new Date(y, m-1, d); }
+function fmtLong(dt){ return DOW[dt.getDay()]+', '+MONL[dt.getMonth()]+' '+dt.getDate(); }
+
+let GRADE = localStorage.getItem('rae_grade') || '3-6';
+
+/* resolve a day for the current grade */
+function resolve(day){
+  let r = Object.assign({}, day);
+  if(day.grades && day.grades[GRADE]) r = Object.assign(r, day.grades[GRADE]);
+  return r;
+}
+
+const BADGE = { trip:['trip','Field Trip'], water:['water','Water Day'], fun:['fun','Fun Day'], choice:['choice','Choice Day'], closed:['closed','Closed'] };
+
+function packFor(day){
+  if(day.type==='closed') return [];
+  const base = [
+    ['base', I.lunch, 'Lunch'],
+    ['base', I.water, 'Water bottle'],
+    ['base', I.snack, 'Snacks'],
+    ['base', I.sun, 'Sunscreen on'],
+    ['base', I.book, 'Book'],
+  ];
+  if(day.type==='trip') base.push(['shirt', I.shirt, 'Summer Care shirt']);
+  if(day.type==='water'){
+    base.push(['swim', I.shirt, 'Water shirt']);
+    base.push(['swim', I.suit, 'Swimsuit']);
+    base.push(['swim', I.towel, 'Towel']);
+  }
+  return base;
+}
+
+function timesHTML(day){
+  if(day.type==='closed') return '';
+  let h = `<div class="day-times">`;
+  h += `<span class="pill2">${I.clock} Drop by <b>9:30a</b></span>`;
+  h += `<span class="pill2">${I.clock} Pickup by <b>5:30p</b></span>`;
+  if(day.dep && !day.onsite){
+    const cls = day.type==='water' ? 'buswater' : 'bus';
+    const verb = day.walk ? 'Walk' : 'Bus';
+    h += `<span class="pill2 ${cls}">${day.walk?I.shoe:I.bus} ${verb} ${day.dep}–${day.back}</span>`;
+  }
+  h += `</div>`;
+  return h;
+}
+
+function dayCard(rawDay, todayStr){
+  const day = resolve(rawDay);
+  const dt = parse(rawDay.d);
+  const isToday = rawDay.d===todayStr;
+  const [bcls,btxt] = BADGE[day.type];
+  let inner = '';
+  if(day.type==='closed'){
+    inner = `<div class="closed-msg">No Summer Care this day.</div>
+             <div class="pill2" style="align-self:flex-start">${I.warn.replace(/stroke="currentColor"/,'stroke="#d6453b"')} Pam still covers Ivy</div>`;
+  } else {
+    const pack = packFor(day).map(p=>`<span class="pk ${p[0]}">${p[1]} ${p[2]}</span>`).join('');
+    let earlyNote = '';
+    if(day.dep && !day.onsite && !day.walk){
+      const h = parseInt(day.dep.split(':')[0],10);
+      if(h<11) earlyNote = `<div class="day-note">${I.warn} Early departure — have Rae at GS <b>before ${day.dep}</b> or she misses the trip.</div>`;
     }
+    inner = `${timesHTML(day)}
+      <div class="pack-h">Pack today</div>
+      <div class="pack">${pack}</div>
+      ${earlyNote}
+      ${rawDay.note?`<div class="day-note" style="color:var(--ivy);background:var(--ivy-light);border-color:var(--ivy-border)">${I.book} ${rawDay.note}</div>`:''}`;
+  }
+  return `<div class="day ${day.type==='closed'?'closed':''} ${isToday?'is-today':''}">
+    <div class="day-h">
+      <div class="day-date"><span class="dow">${DOW[dt.getDay()]}</span><span class="dnum">${MON[dt.getMonth()]} ${dt.getDate()}</span></div>
+      <span class="badge ${bcls}">${btxt}</span>
+    </div>
+    <div class="day-body">
+      <div class="day-act">${day.act}</div>
+      ${inner}
+    </div>
+  </div>`;
+}
 
-    // Already authenticated this session
-    if (sessionStorage.getItem(SESSION_KEY)) {
-      unlock();
-    } else {
-      document.body.classList.add('locked');
-    }
+/* group into weeks (Mon–Fri) */
+function weekKey(s){ const dt=parse(s); const day=(dt.getDay()+6)%7; const mon=new Date(dt); mon.setDate(dt.getDate()-day); return mon; }
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (input.value.trim().toLowerCase() === PASSWORD) {
-        unlock();
-      } else {
-        errMsg.textContent = 'Incorrect password. Try again.';
-        input.classList.add('shake');
-        input.value = '';
-        input.focus();
-        setTimeout(function () { input.classList.remove('shake'); }, 500);
-      }
-    });
+function renderSchedule(todayStr){
+  const groups = [];
+  let cur = null, curKey = null;
+  DAYS.forEach(day=>{
+    const k = weekKey(day.d).getTime();
+    if(k!==curKey){ curKey=k; cur={ mon: weekKey(day.d), items:[] }; groups.push(cur); }
+    cur.items.push(day);
+  });
+  let html = '';
+  groups.forEach(g=>{
+    const mon = g.mon; const fri = new Date(mon); fri.setDate(mon.getDate()+4);
+    const range = `${MON[mon.getMonth()]} ${mon.getDate()} – ${(mon.getMonth()===fri.getMonth()?'':MON[fri.getMonth()]+' ')}${fri.getDate()}`;
+    html += `<div class="week"><div class="week-h"><span class="wk">Week of ${MON[mon.getMonth()]} ${mon.getDate()}</span><span class="wkrange">${range}</span></div>
+      <div class="days">${g.items.map(d=>dayCard(d,todayStr)).join('')}</div></div>`;
+  });
+  document.getElementById('schedule').innerHTML = html;
+}
 
-    input.addEventListener('input', function () { errMsg.textContent = ''; });
-  })();
+/* TODAY panel */
+function renderToday(){
+  const now = new Date();
+  const todayStr = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  // find Rae entry for today, or next care day
+  let entry = DAYS.find(x=>x.d===todayStr && x.type!=='closed');
+  let prefix = 'Today';
+  let isWeekend = (now.getDay()===0||now.getDay()===6);
+  if(!entry){
+    // next upcoming care day
+    const upcoming = DAYS.filter(x=>x.d>=todayStr && x.type!=='closed');
+    if(upcoming.length){ entry = upcoming[0]; prefix = (entry.d===todayStr)?'Today':'Next care day'; }
+  }
+  const wkday = !isWeekend;
+  let raeHTML;
+  if(entry){
+    const day = resolve(entry); const dt = parse(entry.d);
+    const pack = packFor(day).map(p=>`<span class="pk ${p[0]}">${p[1]} ${p[2]}</span>`).join('');
+    raeHTML = `<div class="kidtag"><span class="dot rae"></span>Rae · Good Shepherd</div>
+      <div class="today-act">${day.act}</div>
+      <div class="today-where">${prefix==='Today'?'':fmtLong(dt)+' · '}Door 12 · drop by 9:30a · pickup by 5:30p</div>
+      ${timesHTML(day)}
+      <div class="pack-h" style="margin-top:12px">Pack</div>
+      <div class="pack" style="margin-top:6px">${pack}</div>`;
+  } else {
+    raeHTML = `<div class="kidtag"><span class="dot rae"></span>Rae</div>
+      <div class="today-act">No summer care today</div>
+      <div class="today-where">Summer Care runs weekdays, June 10 – Aug 14.</div>`;
+  }
+
+  let ivyHTML;
+  if(wkday){
+    ivyHTML = `<div class="kidtag"><span class="dot ivy"></span>Ivy · Pam's</div>
+      <div class="today-act">Pam's House</div>
+      <div class="today-where">515 Winnetka Ave S · Pam 612-236-7421</div>
+      <div class="timeline"><span class="tchip">${I.clock} Drop <b>7:50–9:00a</b></span><span class="tchip">${I.clock} Pickup <b>3:00–5:00p</b></span></div>
+      <div class="pack-h" style="margin-top:12px">Pack</div>
+      <div class="pack" style="margin-top:6px"><span class="pk base">${I.lunch} Lunch</span><span class="pk base">${I.snack} Snacks</span><span class="pk base">${I.sun} Sunscreen on</span></div>`;
+  } else {
+    ivyHTML = `<div class="kidtag"><span class="dot ivy"></span>Ivy</div>
+      <div class="today-act">Weekend — no Pam's</div>
+      <div class="today-where">Back Monday.</div>`;
+  }
+
+  const headDate = prefix==='Today' ? fmtLong(now) : 'Weekend · '+fmtLong(now);
+  document.getElementById('today').innerHTML = `
+    <div class="today-top"><span class="tlabel">${prefix==='Today'?'Today':'Up next'}</span><span class="tdate">${headDate}</span></div>
+    <div class="today-grid">
+      <div class="today-kid">${raeHTML}</div>
+      <div class="today-kid">${ivyHTML}</div>
+    </div>`;
+  return todayStr;
+}
+
+function setGrade(g){
+  GRADE=g; localStorage.setItem('rae_grade',g);
+  document.querySelectorAll('#gradeseg button').forEach(b=>b.classList.toggle('on', b.dataset.g===g));
+  const todayStr = renderToday();
+  renderSchedule(todayStr);
+}
+
+document.getElementById('gradeseg').addEventListener('click', e=>{ const b=e.target.closest('button'); if(b) setGrade(b.dataset.g); });
+setGrade(GRADE);
 </script>
 
 </body>
