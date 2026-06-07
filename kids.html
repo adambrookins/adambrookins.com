@@ -5,6 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Brookins Kids — Summer 2026</title>
   <style>
+    /* ── Auth gate ── */
+    #auth-gate {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #1e3a5f;
+      display: flex; align-items: center; justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    #auth-gate.hidden { display: none; }
+
+    .gate-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 36px 36px;
+      width: min(380px, calc(100vw - 32px));
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .gate-icon { font-size: 2.4rem; display: block; margin-bottom: 14px; }
+    .gate-title { font-size: 1.4rem; font-weight: 700; color: #1f2937; margin-bottom: 4px; }
+    .gate-sub { font-size: 0.88rem; color: #6b7280; margin-bottom: 28px; }
+
+    .gate-input {
+      width: 100%; padding: 13px 16px;
+      font-size: 1rem; font-weight: 600; letter-spacing: 0.1em; text-align: center;
+      border: 2px solid #d1d5db; border-radius: 10px;
+      outline: none; color: #1f2937;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .gate-input:focus { border-color: #3b7dd8; box-shadow: 0 0 0 3px rgba(59,125,216,0.15); }
+    .gate-input.shake {
+      border-color: #ef4444;
+      animation: gateShake 0.4s ease;
+    }
+    @keyframes gateShake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-8px); }
+      40%     { transform: translateX(8px); }
+      60%     { transform: translateX(-5px); }
+      80%     { transform: translateX(5px); }
+    }
+    .gate-btn {
+      margin-top: 14px; width: 100%; padding: 13px;
+      background: #1e3a5f; color: #fff; border: none; border-radius: 10px;
+      font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .gate-btn:hover { background: #0d2a50; }
+    .gate-err { font-size: 0.78rem; color: #ef4444; font-weight: 600; margin-top: 10px; min-height: 18px; }
+
+    /* Hide page content until authed */
+    body.locked .site-header,
+    body.locked .container,
+    body.locked footer { visibility: hidden; }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -657,8 +711,61 @@
 </div><!-- end container -->
 
 <footer style="text-align:center; padding: 20px; color: #9ca3af; font-size: 0.8rem; border-top: 1px solid #e5e7eb;">
-  Last updated June 2026 · kids.adambrookins.com
+  Last updated June 2026 · adambrookins.com/kids.html
 </footer>
+
+<!-- ── Auth gate overlay ── -->
+<div id="auth-gate">
+  <div class="gate-card">
+    <span class="gate-icon">👨‍👩‍👧‍👦</span>
+    <div class="gate-title">Brookins Kids</div>
+    <p class="gate-sub">Summer 2026 Schedule<br>Enter the password to continue.</p>
+    <form id="gate-form" autocomplete="off">
+      <input id="gate-pw" type="password" class="gate-input" placeholder="Password" autofocus autocomplete="new-password" />
+      <button type="submit" class="gate-btn">View Schedule</button>
+      <div class="gate-err" id="gate-err"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var PASSWORD = 'brookins';
+    var SESSION_KEY = 'kids_auth';
+    var gate = document.getElementById('auth-gate');
+    var form = document.getElementById('gate-form');
+    var input = document.getElementById('gate-pw');
+    var errMsg = document.getElementById('gate-err');
+
+    function unlock() {
+      sessionStorage.setItem(SESSION_KEY, '1');
+      gate.classList.add('hidden');
+      document.body.classList.remove('locked');
+    }
+
+    // Already authenticated this session
+    if (sessionStorage.getItem(SESSION_KEY)) {
+      unlock();
+    } else {
+      document.body.classList.add('locked');
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (input.value.trim().toLowerCase() === PASSWORD) {
+        unlock();
+      } else {
+        errMsg.textContent = 'Incorrect password. Try again.';
+        input.classList.add('shake');
+        input.value = '';
+        input.focus();
+        setTimeout(function () { input.classList.remove('shake'); }, 500);
+      }
+    });
+
+    input.addEventListener('input', function () { errMsg.textContent = ''; });
+  })();
+</script>
 
 </body>
 </html>
