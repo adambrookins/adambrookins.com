@@ -290,9 +290,44 @@
 
     .cell-main { font-weight: 500; margin-bottom: 2px; }
     .cell-sub { font-size: 0.82rem; color: var(--muted); }
+    .cell-activity {
+      margin-top: 5px;
+      font-size: 0.8rem;
+      color: #374151;
+      background: rgba(0,0,0,0.04);
+      border-radius: 4px;
+      padding: 3px 8px;
+      display: inline-block;
+    }
+
+    .shirt-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 10px;
+      vertical-align: middle;
+      margin-left: 4px;
+    }
+    .shirt-green { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .shirt-blue  { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
 
     .row-closed { background: var(--red-light) !important; }
-    .row-golf { background: #fffbeb !important; }
+    .row-golf   { background: #fffbeb !important; }
+    .row-gs-green { background: #f0fdf4 !important; }
+    .row-gs-blue  { background: #eff6ff !important; }
+
+    /* shirt legend */
+    .shirt-legend {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      padding: 10px 14px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--muted);
+      align-items: center;
+    }
+    .shirt-legend span { display: flex; align-items: center; gap: 5px; }
 
     /* note rows */
     .schedule-note {
@@ -384,24 +419,28 @@
 
   <!-- ── Schedule ── -->
   <p class="section-title">Day-by-Day Schedule</p>
+
+  <div class="shirt-legend">
+    <strong>Row colors:</strong>
+    <span><span class="shirt-tag shirt-green">Green shirt</span> Regular / field trip day — wear green GS shirt</span>
+    <span><span class="shirt-tag shirt-blue">Blue shirt</span> Swim / water park day — wear blue GS shirt + bring swimsuit &amp; towel</span>
+    <span style="color:#92400e;background:#fef9c3;padding:2px 8px;border-radius:4px;">⛳ Golf camp</span>
+    <span style="color:#991b1b;background:#fee2e2;padding:2px 8px;border-radius:4px;">Closed</span>
+  </div>
+
   <div class="schedule-wrapper">
 
     <!-- ═══ JUNE ═══ -->
     <div class="schedule-month">
       <div class="month-header">June 2026</div>
 
-      <!-- Golf camp week notice -->
       <div class="schedule-note">
-        ⛳ Week of June 8–11: Rae has <strong>Golf Camp at Brookview</strong> (Mon–Thu, 9am–3pm). Summer Care begins June 12.
+        ⛳ June 8–11: Rae has <strong>Golf Camp at Brookview</strong> (Mon–Thu, 9am–3pm). Good Shepherd Summer Care begins June 12.
       </div>
 
       <table class="schedule-table">
         <thead>
-          <tr>
-            <th>Date</th>
-            <th>Rae</th>
-            <th>Ivy</th>
-          </tr>
+          <tr><th>Date</th><th>Rae</th><th>Ivy</th></tr>
         </thead>
         <tbody>
 
@@ -433,7 +472,8 @@
             <td class="date-cell">June 10<div class="day">Wednesday</div></td>
             <td>
               <div class="cell-main"><span class="pill golf">Golf Camp</span></div>
-              <div class="cell-sub">Brookview Golf Course · Drop 9am · Pickup 3pm<br><em>(Summer Care starts today but Rae is at golf camp)</em></div>
+              <div class="cell-sub">Brookview Golf Course · Drop 9am · Pickup 3pm</div>
+              <div class="cell-activity">ℹ️ GS Summer Care opens today — Rae attending golf camp instead</div>
             </td>
             <td>
               <div class="cell-main"><span class="pill ivy">Pam's</span></div>
@@ -453,12 +493,12 @@
             </td>
           </tr>
 
-          <!-- June 12 onwards — regular summer care -->
-          <tr>
+          <tr class="row-gs-green">
             <td class="date-cell">June 12<div class="day">Friday</div></td>
             <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">145 Jersey Ave S · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
             </td>
             <td>
               <div class="cell-main"><span class="pill ivy">Pam's</span></div>
@@ -466,12 +506,12 @@
             </td>
           </tr>
 
-          <!-- Week June 15 -->
-          <tr>
-            <td class="date-cell">June 15–19<div class="day">Mon–Fri</div></td>
+          <tr class="row-gs-green">
+            <td class="date-cell">June 15<div class="day">Monday</div></td>
             <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">145 Jersey Ave S · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
             </td>
             <td>
               <div class="cell-main"><span class="pill ivy">Pam's</span></div>
@@ -479,12 +519,12 @@
             </td>
           </tr>
 
-          <!-- Week June 22 -->
-          <tr>
-            <td class="date-cell">June 22–26<div class="day">Mon–Fri</div></td>
+          <tr class="row-gs-green">
+            <td class="date-cell">June 16<div class="day">Tuesday</div></td>
             <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">145 Jersey Ave S · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
             </td>
             <td>
               <div class="cell-main"><span class="pill ivy">Pam's</span></div>
@@ -492,12 +532,129 @@
             </td>
           </tr>
 
-          <!-- Week June 29 -->
-          <tr>
-            <td class="date-cell">June 29–30<div class="day">Mon–Tue</div></td>
+          <tr class="row-gs-green">
+            <td class="date-cell">June 17<div class="day">Wednesday</div></td>
             <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">145 Jersey Ave S · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">June 18<div class="day">Thursday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">June 19<div class="day">Friday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">June 22<div class="day">Monday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">June 23<div class="day">Tuesday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">June 24<div class="day">Wednesday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">June 25<div class="day">Thursday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">June 26<div class="day">Friday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">June 29<div class="day">Monday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">June 30<div class="day">Tuesday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
             </td>
             <td>
               <div class="cell-main"><span class="pill ivy">Pam's</span></div>
@@ -514,19 +671,29 @@
       <div class="month-header">July 2026</div>
       <table class="schedule-table">
         <thead>
-          <tr>
-            <th>Date</th>
-            <th>Rae</th>
-            <th>Ivy</th>
-          </tr>
+          <tr><th>Date</th><th>Rae</th><th>Ivy</th></tr>
         </thead>
         <tbody>
 
-          <tr>
-            <td class="date-cell">July 1–2<div class="day">Wed–Thu</div></td>
+          <tr class="row-gs-green">
+            <td class="date-cell">July 1<div class="day">Wednesday</div></td>
             <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 2<div class="day">Thursday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
             </td>
             <td>
               <div class="cell-main"><span class="pill ivy">Pam's</span></div>
@@ -550,15 +717,159 @@
             <td class="date-cell">July 4–6<div class="day">Sat–Mon</div></td>
             <td colspan="2">
               <div class="cell-main"><span class="pill closed">No School Care</span></div>
-              <div class="cell-sub">July 4th weekend &amp; July 6 holiday observance — Good Shepherd closed. Pam is available Mon–Fri.</div>
+              <div class="cell-sub">July 4th weekend &amp; July 6 holiday — Good Shepherd closed. Pam available Mon–Fri.</div>
             </td>
           </tr>
 
-          <tr>
-            <td class="date-cell">July 7–11<div class="day">Tue–Fri</div></td>
+          <tr class="row-gs-green">
+            <td class="date-cell">July 7<div class="day">Tuesday</div></td>
             <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 8<div class="day">Wednesday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 9<div class="day">Thursday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 10<div class="day">Friday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 13<div class="day">Monday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 14<div class="day">Tuesday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 15<div class="day">Wednesday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 16<div class="day">Thursday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 17<div class="day">Friday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 20<div class="day">Monday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 21<div class="day">Tuesday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 22<div class="day">Wednesday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
             </td>
             <td>
               <div class="cell-main"><span class="pill ivy">Pam's</span></div>
@@ -567,34 +878,10 @@
           </tr>
 
           <tr>
-            <td class="date-cell">July 13–17<div class="day">Mon–Fri</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Drop 7:30–9am · Pickup by 5:30pm</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">July 20–22<div class="day">Mon–Wed</div></td>
-            <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Drop 7:30–9am · Pickup by 5:30pm</div>
-            </td>
-            <td>
-              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
-              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="date-cell">July 23–24<div class="day">Thu–Fri</div></td>
+            <td class="date-cell">July 23<div class="day">Thursday</div></td>
             <td>
               <div class="cell-main"><span class="pill nocare">Not Enrolled</span></div>
-              <div class="cell-sub">Rae not signed up for these days — confirm with parents</div>
+              <div class="cell-sub">Rae not signed up for this day — confirm with parents</div>
             </td>
             <td>
               <div class="cell-main"><span class="pill ivy">Pam's</span></div>
@@ -603,10 +890,75 @@
           </tr>
 
           <tr>
-            <td class="date-cell">July 27–31<div class="day">Mon–Fri</div></td>
+            <td class="date-cell">July 24<div class="day">Friday</div></td>
             <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-main"><span class="pill nocare">Not Enrolled</span></div>
+              <div class="cell-sub">Rae not signed up for this day — confirm with parents</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 27<div class="day">Monday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 28<div class="day">Tuesday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 29<div class="day">Wednesday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 30<div class="day">Thursday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">July 31<div class="day">Friday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
             </td>
             <td>
               <div class="cell-main"><span class="pill ivy">Pam's</span></div>
@@ -623,19 +975,16 @@
       <div class="month-header">August 2026</div>
       <table class="schedule-table">
         <thead>
-          <tr>
-            <th>Date</th>
-            <th>Rae</th>
-            <th>Ivy</th>
-          </tr>
+          <tr><th>Date</th><th>Rae</th><th>Ivy</th></tr>
         </thead>
         <tbody>
 
-          <tr>
-            <td class="date-cell">Aug 3–7<div class="day">Mon–Fri</div></td>
+          <tr class="row-gs-green">
+            <td class="date-cell">Aug 3<div class="day">Monday</div></td>
             <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
             </td>
             <td>
               <div class="cell-main"><span class="pill ivy">Pam's</span></div>
@@ -643,11 +992,12 @@
             </td>
           </tr>
 
-          <tr>
-            <td class="date-cell">Aug 10–14<div class="day">Mon–Fri</div></td>
+          <tr class="row-gs-green">
+            <td class="date-cell">Aug 4<div class="day">Tuesday</div></td>
             <td>
-              <div class="cell-main"><span class="pill rae">Good Shepherd</span></div>
-              <div class="cell-sub">Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
             </td>
             <td>
               <div class="cell-main"><span class="pill ivy">Pam's</span></div>
@@ -655,11 +1005,107 @@
             </td>
           </tr>
 
-          <tr class="row-closed">
+          <tr class="row-gs-green">
+            <td class="date-cell">Aug 5<div class="day">Wednesday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">Aug 6<div class="day">Thursday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">Aug 7<div class="day">Friday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">Aug 10<div class="day">Monday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">Aug 11<div class="day">Tuesday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">Aug 12<div class="day">Wednesday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
+            <td class="date-cell">Aug 13<div class="day">Thursday</div></td>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
+            </td>
+          </tr>
+
+          <tr class="row-gs-green">
             <td class="date-cell">Aug 14<div class="day">Friday</div></td>
-            <td colspan="2">
-              <div class="cell-main"><span class="pill closed">Last Day of Summer Care</span></div>
-              <div class="cell-sub">Good Shepherd Summer Care ends August 14. School resumes shortly after.</div>
+            <td>
+              <div class="cell-main"><span class="pill rae">Good Shepherd</span> <span class="shirt-tag shirt-green">Green shirt</span> <span class="pill closed" style="font-size:0.7rem;padding:1px 7px;">Last Day</span></div>
+              <div class="cell-sub">Door 12 · Drop 7:30–9am · Pickup by 5:30pm</div>
+              <div class="cell-activity">📅 Activity TBD — see Emma's weekly email · Last day of Summer Care</div>
+            </td>
+            <td>
+              <div class="cell-main"><span class="pill ivy">Pam's</span></div>
+              <div class="cell-sub">Drop 7:50–9am · Pickup 3–5pm</div>
             </td>
           </tr>
 
