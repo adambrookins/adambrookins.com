@@ -311,9 +311,9 @@
   <div class="sec-title">Rae · Day-by-Day Summer Care</div>
 
   <div class="gradebar">
-    <div class="lbl">Rae's grade this fall: <span>(sets the grade-specific field-trip days)</span></div>
+    <div class="lbl">Rae's grade this fall: <span>2nd grade — sets grade-specific field trips</span></div>
     <div class="seg" id="gradeseg">
-      <button data-g="1-2">1st–2nd</button>
+      <button data-g="1-2">1st–2nd ★</button>
       <button data-g="3-6">3rd–6th</button>
     </div>
   </div>
@@ -450,7 +450,7 @@ const MONL = ['January','February','March','April','May','June','July','August',
 function parse(s){ const [y,m,d]=s.split('-').map(Number); return new Date(y, m-1, d); }
 function fmtLong(dt){ return DOW[dt.getDay()]+', '+MONL[dt.getMonth()]+' '+dt.getDate(); }
 
-let GRADE = localStorage.getItem('rae_grade') || '3-6';
+let GRADE = localStorage.getItem('rae_grade') || '1-2';
 
 /* resolve a day for the current grade */
 function resolve(day){
