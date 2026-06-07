@@ -309,8 +309,8 @@
       <div class="row" style="margin-top:4px;background:var(--warn-light);border:1px solid var(--warn-border);border-radius:10px;padding:8px 10px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--warn)"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h0"/></svg>
         <p style="color:#7a4f1a"><b>Drop-off &amp; pickup are at different spots</b><br>
-        Drop: 8:45–9:00a · <b>Lesson Tee</b> (not main entrance)<br>
-        Pickup: 2:45–3:00p · <b>Par 3 course</b></p>
+        Drop: 8:45–9:00a · <a href="https://maps.google.com/?q=Brookview+Golf+Course+Lesson+Tee+316+Brookview+Pkwy+S+Golden+Valley+MN+55426" target="_blank" style="color:#7a4f1a"><b>Lesson Tee</b></a> (not main entrance)<br>
+        Pickup: 2:45–3:00p · <a href="https://maps.google.com/?q=Brookview+Par+3+Golf+Course+316+Brookview+Pkwy+S+Golden+Valley+MN+55426" target="_blank" style="color:#7a4f1a"><b>Par 3 course</b></a></p>
       </div>
       <span class="hours" style="color:var(--golf)">Camp 9:00a – 3:00p · Clubs provided if needed</span>
     </div>
@@ -495,8 +495,8 @@ function packFor(day){
 function timesHTML(day){
   if(day.type==='closed') return '';
   if(day.type==='golf') return `<div class="day-times">
-    <span class="pill2" style="background:var(--golf-light);border-color:var(--golf-border);color:var(--golf)">${I.clock} Drop <b>8:45–9:00a</b> · Lesson Tee</span>
-    <span class="pill2" style="background:var(--golf-light);border-color:var(--golf-border);color:var(--golf)">${I.clock} Pickup <b>2:45–3:00p</b> · Par 3 course</span>
+    <a href="https://maps.google.com/?q=Brookview+Golf+Course+Lesson+Tee+316+Brookview+Pkwy+S+Golden+Valley+MN+55426" target="_blank" style="text-decoration:none"><span class="pill2" style="background:var(--golf-light);border-color:var(--golf-border);color:var(--golf)">${I.clock} Drop <b>8:45–9:00a</b> · Lesson Tee 📍</span></a>
+    <a href="https://maps.google.com/?q=Brookview+Par+3+Golf+Course+316+Brookview+Pkwy+S+Golden+Valley+MN+55426" target="_blank" style="text-decoration:none"><span class="pill2" style="background:var(--golf-light);border-color:var(--golf-border);color:var(--golf)">${I.clock} Pickup <b>2:45–3:00p</b> · Par 3 course 📍</span></a>
   </div>`;
   let h = `<div class="day-times">`;
   h += `<span class="pill2">${I.clock} Drop by <b>9:30a</b></span>`;
@@ -586,7 +586,7 @@ function renderToday(){
     const isGolf = day.type==='golf';
     raeHTML = `<div class="kidtag"><span class="dot rae"></span>Rae · ${isGolf?'Golf Camp':'Good Shepherd'}</div>
       <div class="today-act">${day.act}</div>
-      <div class="today-where">${prefix==='Today'?'':fmtLong(dt)+' · '}${isGolf?'Brookview Golf Course · drop 8:45–9:00a Lesson Tee · pickup 2:45–3:00p Par 3':'Door 12 · drop by 9:30a · pickup by 5:30p'}</div>
+      <div class="today-where">${prefix==='Today'?'':fmtLong(dt)+' · '}${isGolf?`Brookview Golf Course · drop 8:45–9:00a <a href="https://maps.google.com/?q=Brookview+Golf+Course+Lesson+Tee+316+Brookview+Pkwy+S+Golden+Valley+MN+55426" target="_blank">Lesson Tee 📍</a> · pickup 2:45–3:00p <a href="https://maps.google.com/?q=Brookview+Par+3+Golf+Course+316+Brookview+Pkwy+S+Golden+Valley+MN+55426" target="_blank">Par 3 📍</a>`:'Door 12 · drop by 9:30a · pickup by 5:30p'}</div>
       ${timesHTML(day)}
       <div class="pack-h" style="margin-top:12px">Pack</div>
       <div class="pack" style="margin-top:6px">${pack}</div>`;
